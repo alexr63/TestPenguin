@@ -43,21 +43,28 @@ var categories = new List<Category>
 
 var products = new List<Product>
 {
-    new Product(1, "VFC39PBLAL", 1, 664.70m)
+    new Product(1, "VFC39IBLAL", 1, 664.70m)
+    {
+        FridgeFreezerConfigurationId = 3,
+        DoorTypeAndHingeId = 1,
+        CompressorAndCondenserId = 1,
+        CompressorVoltageId = 1,
+    },
+    new Product(2, "VFC39PBLAL", 1, 664.70m)
     {
         FridgeFreezerConfigurationId = 4,
         DoorTypeAndHingeId = 1,
         CompressorAndCondenserId = 1,
         CompressorVoltageId = 1,
     },
-    new Product(2, "VFDP144LBLAL-K-", 2, 61996.41m)
+    new Product(3, "VFDP144LBLAL-K-", 2, 61996.41m)
     {
         FridgeFreezerConfigurationId = 1,
         DoorTypeAndHingeId = 1,
         CompressorAndCondenserId = 3,
         CompressorVoltageId = 1,
     },
-    new Product(3, "VFTL20L", 3, 832.17m)
+    new Product(4, "VFTL20L", 3, 832.17m)
     {
         FridgeFreezerConfigurationId = 2,
         DoorTypeAndHingeId = null,
@@ -66,14 +73,19 @@ var products = new List<Product>
     },
 };
 
+var category1Products = products.Where(p => p.CategoryId == 1).ToList();
+var category1ProductFridgeFreezerConfigurationIds = category1Products.Select(p => p.FridgeFreezerConfigurationId).ToList();
+string jsonString = JsonConvert.SerializeObject(category1ProductFridgeFreezerConfigurationIds, Formatting.Indented);
+Console.WriteLine(jsonString);
+
 var category3Products = products.Where(p => p.CategoryId == 3).ToList();
 var category3ProductFridgeFreezerConfigurationIds = category3Products.Select(p => p.FridgeFreezerConfigurationId).ToList();
-string productJsonString = JsonConvert.SerializeObject(category3ProductFridgeFreezerConfigurationIds, Formatting.Indented);
-Console.WriteLine(productJsonString);
+jsonString = JsonConvert.SerializeObject(category3ProductFridgeFreezerConfigurationIds, Formatting.Indented);
+Console.WriteLine(jsonString);
 
 var category3ProductDoorTypeAndHingeIds = category3Products.Select(p => p.DoorTypeAndHingeId).ToList();
-productJsonString = JsonConvert.SerializeObject(category3ProductDoorTypeAndHingeIds, Formatting.Indented);
-Console.WriteLine(productJsonString);
+jsonString = JsonConvert.SerializeObject(category3ProductDoorTypeAndHingeIds, Formatting.Indented);
+Console.WriteLine(jsonString);
 
 foreach (var product in products)
 {
