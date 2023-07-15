@@ -1,7 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Newtonsoft.Json;
-
-Console.WriteLine("Hello, World!");
+﻿using Newtonsoft.Json;
 
 var fridgeFreezerConfigurations = new List<FridgeFreezerConfiguration>
 {
@@ -73,23 +70,39 @@ var products = new List<Product>
     },
 };
 
+foreach (var product in products)
+{
+    product.Category = categories.Single(c => c.Id == product.CategoryId);
+    product.FridgeFreezerConfiguration = fridgeFreezerConfigurations.Single(f => f.Id == product.FridgeFreezerConfigurationId);
+    product.DoorTypeAndHinge = doorTypeAndHinges.SingleOrDefault(d => d.Id == product.DoorTypeAndHingeId);
+    product.CompressorAndCondenser = compressorAndCondensers.Single(c => c.Id == product.CompressorAndCondenserId);
+    product.CompressorVoltage = compressorVoltages.Single(c => c.Id == product.CompressorVoltageId);
+}
+
+// Display FridgeFreezerConfigurationIds for Category 1 products
+Console.WriteLine("FridgeFreezerConfigurationIds for Category 39 Litre 12/24 volt marine fridge products");
 var category1Products = products.Where(p => p.CategoryId == 1).ToList();
 var category1ProductFridgeFreezerConfigurationIds = category1Products.Select(p => p.FridgeFreezerConfigurationId).ToList();
 string jsonString = JsonConvert.SerializeObject(category1ProductFridgeFreezerConfigurationIds, Formatting.Indented);
 Console.WriteLine(jsonString);
 
+// Display FridgeFreezerConfigurationIds for Category 3 products  
+Console.WriteLine("FridgeFreezerConfigurationIds for Category 20 Litre top opening 12/24 volt marine fridge products");
 var category3Products = products.Where(p => p.CategoryId == 3).ToList();
 var category3ProductFridgeFreezerConfigurationIds = category3Products.Select(p => p.FridgeFreezerConfigurationId).ToList();
 jsonString = JsonConvert.SerializeObject(category3ProductFridgeFreezerConfigurationIds, Formatting.Indented);
 Console.WriteLine(jsonString);
 
+// Display DoorTypeAndHingeIds for Category 3 products
+Console.WriteLine("DoorTypeAndHingeIds for Category 20 Litre top opening 12/24 volt marine fridge products");
 var category3ProductDoorTypeAndHingeIds = category3Products.Select(p => p.DoorTypeAndHingeId).ToList();
 jsonString = JsonConvert.SerializeObject(category3ProductDoorTypeAndHingeIds, Formatting.Indented);
 Console.WriteLine(jsonString);
 
 foreach (var product in products)
 {
-    Console.WriteLine(product);
+    var json = JsonConvert.SerializeObject(product, Formatting.Indented);
+    Console.WriteLine(json);
 }
 
 category1Products.Where(p => p.FridgeFreezerConfigurationId == 3).ToList().ForEach(p => Console.WriteLine(p));
@@ -112,7 +125,7 @@ public class Product
     public int FridgeFreezerConfigurationId { get; set; }
     public virtual FridgeFreezerConfiguration FridgeFreezerConfiguration { get; set; }
     public int? DoorTypeAndHingeId { get; set; }
-    public virtual DoorTypeAndHinge DoorTypeAndHinge { get; set; }
+    public virtual DoorTypeAndHinge? DoorTypeAndHinge { get; set; }
     public int CompressorAndCondenserId { get; set; }
     public virtual CompressorAndCondenser CompressorAndCondenser { get; set; }
     public int CompressorVoltageId { get; set; }
@@ -124,11 +137,6 @@ public class Product
         Name = name;
         CategoryId = categoryId;
         Price = price;
-    }
-
-    public override string ToString()
-    {
-        return $"Id: {Id}, Name: {Name}, CategoryId: {CategoryId}, Price: {Price}";
     }
 }
 
