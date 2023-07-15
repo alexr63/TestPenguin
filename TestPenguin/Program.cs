@@ -1,4 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using Newtonsoft.Json;
+
 Console.WriteLine("Hello, World!");
 
 var fridgeFreezerConfigurations = new List<FridgeFreezerConfiguration>
@@ -55,7 +57,23 @@ var products = new List<Product>
         CompressorAndCondenserId = 3,
         CompressorVoltageId = 1,
     },
+    new Product(3, "VFTL20L", 3, 832.17m)
+    {
+        FridgeFreezerConfigurationId = 2,
+        DoorTypeAndHingeId = null,
+        CompressorAndCondenserId = 5,
+        CompressorVoltageId = 1,
+    },
 };
+
+var category3Products = products.Where(p => p.CategoryId == 3).ToList();
+var category3ProductFridgeFreezerConfigurationIds = category3Products.Select(p => p.FridgeFreezerConfigurationId).ToList();
+string productJsonString = JsonConvert.SerializeObject(category3ProductFridgeFreezerConfigurationIds, Formatting.Indented);
+Console.WriteLine(productJsonString);
+
+var category3ProductDoorTypeAndHingeIds = category3Products.Select(p => p.DoorTypeAndHingeId).ToList();
+productJsonString = JsonConvert.SerializeObject(category3ProductDoorTypeAndHingeIds, Formatting.Indented);
+Console.WriteLine(productJsonString);
 
 foreach (var product in products)
 {
@@ -79,7 +97,7 @@ public class Product
 
     public int FridgeFreezerConfigurationId { get; set; }
     public virtual FridgeFreezerConfiguration FridgeFreezerConfiguration { get; set; }
-    public int DoorTypeAndHingeId { get; set; }
+    public int? DoorTypeAndHingeId { get; set; }
     public virtual DoorTypeAndHinge DoorTypeAndHinge { get; set; }
     public int CompressorAndCondenserId { get; set; }
     public virtual CompressorAndCondenser CompressorAndCondenser { get; set; }
