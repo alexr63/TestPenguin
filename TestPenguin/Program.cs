@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 
+// Initialise data
+
 var fridgeFreezerConfigurations = new List<FridgeFreezerConfiguration>
 {
     new FridgeFreezerConfiguration { Id = 1, Name = "Front opening fridge freezer" },
@@ -79,6 +81,13 @@ foreach (var product in products)
     product.CompressorVoltage = compressorVoltages.Single(c => c.Id == product.CompressorVoltageId);
 }
 
+// Display all products
+foreach (var product in products)
+{
+    var json = JsonConvert.SerializeObject(product, Formatting.Indented);
+    Console.WriteLine(json);
+}
+
 // Display FridgeFreezerConfigurationIds for Category 1 products
 Console.WriteLine("FridgeFreezerConfigurationIds for Category 39 Litre 12/24 volt marine fridge products");
 var category1Products = products.Where(p => p.CategoryId == 1).ToList();
@@ -99,13 +108,9 @@ var category3ProductDoorTypeAndHingeIds = category3Products.Select(p => p.DoorTy
 jsonString = JsonConvert.SerializeObject(category3ProductDoorTypeAndHingeIds, Formatting.Indented);
 Console.WriteLine(jsonString);
 
-foreach (var product in products)
-{
-    var json = JsonConvert.SerializeObject(product, Formatting.Indented);
-    Console.WriteLine(json);
-}
-
-category1Products.Where(p => p.FridgeFreezerConfigurationId == 3).ToList().ForEach(p => Console.WriteLine(p));
+// Display Category C39 – 39 Litre 12/24 volt marine fridge products with FridgeFreezerConfiguration = Front opening with ice box - standard option
+Console.WriteLine("Category C39 – 39 Litre 12/24 volt marine fridge products with FridgeFreezerConfiguration = Front opening with ice box - standard option");
+category1Products.Where(p => p.FridgeFreezerConfigurationId == 3).ToList().ForEach(p => Console.WriteLine(p.Name));
 
 public class Category
 {
