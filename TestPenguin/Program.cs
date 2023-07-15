@@ -42,34 +42,10 @@ var categories = new List<Category>
 
 var products = new List<Product>
 {
-    new Product(1, "VFC39IBLAL", 1, 664.70m)
-    {
-        FridgeFreezerConfigurationId = 3,
-        DoorTypeAndHingeId = 1,
-        CompressorAndCondenserId = 1,
-        CompressorVoltageId = 1,
-    },
-    new Product(2, "VFC39PBLAL", 1, 664.70m)
-    {
-        FridgeFreezerConfigurationId = 4,
-        DoorTypeAndHingeId = 1,
-        CompressorAndCondenserId = 1,
-        CompressorVoltageId = 1,
-    },
-    new Product(3, "VFDP144LBLAL-K-", 2, 61996.41m)
-    {
-        FridgeFreezerConfigurationId = 1,
-        DoorTypeAndHingeId = 1,
-        CompressorAndCondenserId = 3,
-        CompressorVoltageId = 1,
-    },
-    new Product(4, "VFTL20L", 3, 832.17m)
-    {
-        FridgeFreezerConfigurationId = 2,
-        DoorTypeAndHingeId = null,
-        CompressorAndCondenserId = 5,
-        CompressorVoltageId = 1,
-    },
+    new Product(1, "VFC39IBLAL", 1, 664.70m, 3, 1, 1, 1),
+    new Product(2, "VFC39PBLAL", 1, 664.70m, 4, 1, 1, 1),
+    new Product(3, "VFDP144LBLAL-K-", 2, 61996.41m, 1, 1, 3, 1),
+    new Product(4, "VFTL20L", 3, 832.17m, 2, null, 5, 1),
 };
 
 foreach (var product in products)
@@ -136,12 +112,20 @@ public class Product
     public int CompressorVoltageId { get; set; }
     public virtual CompressorVoltage CompressorVoltage { get; set; }
 
-    public Product(int id, string name, int categoryId, decimal price)
+    public Product(int id, string name, int categoryId, decimal price,
+        int fridgeFreezerConfigurationId,
+        int? doorTypeAndHingeId,
+        int compressorAndCondenserId,
+        int compressorVoltageId)
     {
         Id = id;
         Name = name;
         CategoryId = categoryId;
         Price = price;
+        FridgeFreezerConfigurationId = fridgeFreezerConfigurationId;
+        DoorTypeAndHingeId = doorTypeAndHingeId;
+        CompressorAndCondenserId = compressorAndCondenserId;
+        CompressorVoltageId = compressorVoltageId;
     }
 }
 
