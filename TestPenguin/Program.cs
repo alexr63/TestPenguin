@@ -92,6 +92,8 @@ foreach (var product in products)
     Console.WriteLine(product);
 }
 
+category1Products.Where(p => p.FridgeFreezerConfigurationId == 3).ToList().ForEach(p => Console.WriteLine(p));
+
 public class Category
 {
     public int Id { get; set; }
