@@ -16,6 +16,9 @@ var doorTypeAndHinges = new List<DoorTypeAndHinge>
     new DoorTypeAndHinge { Id = 2, Name = "Black door and fitting frame" },
     new DoorTypeAndHinge { Id = 3, Name = "Grey door no fitting frame" },
     new DoorTypeAndHinge { Id = 4, Name = "Grey door and fitting frame" },
+    new DoorTypeAndHinge { Id = 5, Name = "Brushed stainless rolled edge door with slam latch (std option)" },
+    new DoorTypeAndHinge { Id = 6, Name = "Integrated throw hinge door (internal use only)" },
+    new DoorTypeAndHinge { Id = 7, Name = "316 Stainless with rolled edge door & slam latch (external use)" },
 };
 
 var compressorAndCondensers = new List<CompressorAndCondenser>
@@ -38,6 +41,7 @@ var categories = new List<Category>
     new Category { Id = 1, Name = "C39 – 39 Litre 12/24 volt marine fridge" },
     new Category { Id = 2, Name = "SLIM150 144 Litre 12/24 volt marine fridge freezer" },
     new Category { Id = 3, Name = "20 Litre top opening 12/24 volt marine fridge" },
+    new Category { Id = 4, Name = "MS130 – 130 Litre stainless marine fridge" },
 };
 
 var products = new List<Product>
@@ -46,6 +50,7 @@ var products = new List<Product>
     new Product(2, "VFC39PBLAL", 1, 664.70m, 4, 1, 1, 1),
     new Product(3, "VFDP144LBLAL-K-", 2, 61996.41m, 1, 1, 3, 1),
     new Product(4, "VFTL20L", 3, 832.17m, 2, null, 5, 1),
+    new Product(5, "1G50841-TH-12V-A-12/24", 4, 2472.00m, 3, 6, 1, 1),
 };
 
 foreach (var product in products)
