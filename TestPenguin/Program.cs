@@ -41,7 +41,16 @@ var categories = new List<Category>
     new Category { Id = 1, Name = "C39 – 39 Litre 12/24 volt marine fridge" },
     new Category { Id = 2, Name = "SLIM150 144 Litre 12/24 volt marine fridge freezer" },
     new Category { Id = 3, Name = "20 Litre top opening 12/24 volt marine fridge" },
-    new Category { Id = 4, Name = "MS130 – 130 Litre stainless marine fridge" },
+    new Category
+    {
+        Id = 4, Name = "MS130 – 130 Litre stainless marine fridge",
+        CategoryDoorTypeAndHinges = new List<CategoryDoorTypeAndHinge>
+        {
+            new CategoryDoorTypeAndHinge { CategoryId = 4, DoorTypeAndHingeId = 5 },
+            new CategoryDoorTypeAndHinge { CategoryId = 4, DoorTypeAndHingeId = 6 },
+            new CategoryDoorTypeAndHinge { CategoryId = 4, DoorTypeAndHingeId = 7 },
+        },
+    },
 };
 
 var products = new List<Product>
@@ -97,7 +106,17 @@ public class Category
 {
     public int Id { get; set; }
     public string Name { get; set; }
+    public virtual ICollection<CategoryDoorTypeAndHinge> CategoryDoorTypeAndHinges { get; set; }
     public virtual ICollection<Product> Products { get; set; }
+}
+
+public class CategoryDoorTypeAndHinge
+{
+    public int Id { get; set; }
+    public int CategoryId { get; set; }
+    public virtual Category Category { get; set; }
+    public int DoorTypeAndHingeId { get; set; }
+    public virtual DoorTypeAndHinge DoorTypeAndHinge { get; set; }
 }
 
 public class Product
