@@ -127,20 +127,20 @@ public class Product
     public virtual Category Category { get; set; }
     public decimal Price { get; set; }
 
-    public int FridgeFreezerConfigurationId { get; set; }
+    public int? FridgeFreezerConfigurationId { get; set; }
     public virtual FridgeFreezerConfiguration FridgeFreezerConfiguration { get; set; }
     public int? DoorTypeAndHingeId { get; set; }
     public virtual DoorTypeAndHinge? DoorTypeAndHinge { get; set; }
-    public int CompressorAndCondenserId { get; set; }
+    public int? CompressorAndCondenserId { get; set; }
     public virtual CompressorAndCondenser CompressorAndCondenser { get; set; }
-    public int CompressorVoltageId { get; set; }
+    public int? CompressorVoltageId { get; set; }
     public virtual CompressorVoltage CompressorVoltage { get; set; }
 
     public Product(int id, string name, int categoryId, decimal price,
-        int fridgeFreezerConfigurationId,
+        int? fridgeFreezerConfigurationId,
         int? doorTypeAndHingeId,
-        int compressorAndCondenserId,
-        int compressorVoltageId)
+        int? compressorAndCondenserId,
+        int? compressorVoltageId)
     {
         Id = id;
         Name = name;
