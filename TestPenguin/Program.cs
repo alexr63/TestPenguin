@@ -36,95 +36,72 @@ var compressorVoltages = new List<CompressorVoltage>
     new CompressorVoltage { Id = 1, Name = "12v/24V DC" },
 };
 
-var categories = new List<Category>
+var products = new List<Product>
 {
-    new Category { Id = 1, Name = "C39 – 39 Litre 12/24 volt marine fridge" },
-    new Category { Id = 2, Name = "SLIM150 144 Litre 12/24 volt marine fridge freezer" },
-    new Category { Id = 3, Name = "20 Litre top opening 12/24 volt marine fridge" },
-    new Category
+    new Product { Id = 1, Name = "C39 – 39 Litre 12/24 volt marine fridge" },
+    new Product { Id = 2, Name = "SLIM150 144 Litre 12/24 volt marine fridge freezer" },
+    new Product { Id = 3, Name = "20 Litre top opening 12/24 volt marine fridge" },
+    new Product
     {
         Id = 4, Name = "MS130 – 130 Litre stainless marine fridge",
-        CategoryDoorTypeAndHinges = new List<CategoryDoorTypeAndHinge>
+        ProductDoorTypeAndHinges = new List<ProductDoorTypeAndHinge>
         {
-            new CategoryDoorTypeAndHinge { CategoryId = 4, DoorTypeAndHingeId = 5 },
-            new CategoryDoorTypeAndHinge { CategoryId = 4, DoorTypeAndHingeId = 6 },
-            new CategoryDoorTypeAndHinge { CategoryId = 4, DoorTypeAndHingeId = 7 },
+            new ProductDoorTypeAndHinge { ProductId = 4, DoorTypeAndHingeId = 5 },
+            new ProductDoorTypeAndHinge { ProductId = 4, DoorTypeAndHingeId = 6 },
+            new ProductDoorTypeAndHinge { ProductId = 4, DoorTypeAndHingeId = 7 },
         },
     },
 };
 
-var products = new List<Product>
+var parts = new List<Part>
 {
-    new Product(1, "VFC39IBLAL", 1, 664.70m, 3, 1, 1, 1),
-    new Product(2, "VFC39PBLAL", 1, 664.70m, 4, 1, 1, 1),
-    new Product(3, "VFDP144LBLAL-K-", 2, 61996.41m, 1, 1, 3, 1),
-    new Product(4, "VFTL20L", 3, 832.17m, 2, null, 5, 1),
-    new Product(5, "1G50841-TH-12V-A-12/24", 4, 2472.00m, 3, 6, 1, 1),
+    new Part(1, "VFC39IBLAL", 1, 664.70m, 3, 1, 1, 1),
+    new Part(2, "VFC39PBLAL", 1, 664.70m, 4, 1, 1, 1),
+    new Part(3, "VFDP144LBLAL-K-", 2, 61996.41m, 1, 1, 3, 1),
+    new Part(4, "VFTL20L", 3, 832.17m, 2, null, 5, 1),
+    new Part(5, "1G50841-TH-12V-A-12/24", 4, 2472.00m, 3, 6, 1, 1),
 };
 
-foreach (var product in products)
+// initialise relationships
+foreach (var part in parts)
 {
-    product.Category = categories.Single(c => c.Id == product.CategoryId);
-    product.FridgeFreezerConfiguration = fridgeFreezerConfigurations.Single(f => f.Id == product.FridgeFreezerConfigurationId);
-    product.DoorTypeAndHinge = doorTypeAndHinges.SingleOrDefault(d => d.Id == product.DoorTypeAndHingeId);
-    product.CompressorAndCondenser = compressorAndCondensers.Single(c => c.Id == product.CompressorAndCondenserId);
-    product.CompressorVoltage = compressorVoltages.Single(c => c.Id == product.CompressorVoltageId);
+    part.Product = products.Single(c => c.Id == part.ProductId);
+    part.FridgeFreezerConfiguration = fridgeFreezerConfigurations.Single(f => f.Id == part.FridgeFreezerConfigurationId);
+    part.DoorTypeAndHinge = doorTypeAndHinges.SingleOrDefault(d => d.Id == part.DoorTypeAndHingeId);
+    part.CompressorAndCondenser = compressorAndCondensers.Single(c => c.Id == part.CompressorAndCondenserId);
+    part.CompressorVoltage = compressorVoltages.Single(c => c.Id == part.CompressorVoltageId);
 }
 
-// Display all products
-foreach (var product in products)
+// Display all parts
+foreach (var part in parts)
 {
-    var json = JsonConvert.SerializeObject(product, Formatting.Indented);
+    var json = JsonConvert.SerializeObject(part, Formatting.Indented);
     Console.WriteLine(json);
-}
-
-// Display FridgeFreezerConfigurationIds for Category 1 products
-Console.WriteLine("FridgeFreezerConfigurationIds for Category 39 Litre 12/24 volt marine fridge products");
-var category1Products = products.Where(p => p.CategoryId == 1).ToList();
-var category1ProductFridgeFreezerConfigurationIds = category1Products.Select(p => p.FridgeFreezerConfigurationId).ToList();
-string jsonString = JsonConvert.SerializeObject(category1ProductFridgeFreezerConfigurationIds, Formatting.Indented);
-Console.WriteLine(jsonString);
-
-// Display FridgeFreezerConfigurationIds for Category 3 products  
-Console.WriteLine("FridgeFreezerConfigurationIds for Category 20 Litre top opening 12/24 volt marine fridge products");
-var category3Products = products.Where(p => p.CategoryId == 3).ToList();
-var category3ProductFridgeFreezerConfigurationIds = category3Products.Select(p => p.FridgeFreezerConfigurationId).ToList();
-jsonString = JsonConvert.SerializeObject(category3ProductFridgeFreezerConfigurationIds, Formatting.Indented);
-Console.WriteLine(jsonString);
-
-// Display DoorTypeAndHingeIds for Category 3 products
-Console.WriteLine("DoorTypeAndHingeIds for Category 20 Litre top opening 12/24 volt marine fridge products");
-var category3ProductDoorTypeAndHingeIds = category3Products.Select(p => p.DoorTypeAndHingeId).ToList();
-jsonString = JsonConvert.SerializeObject(category3ProductDoorTypeAndHingeIds, Formatting.Indented);
-Console.WriteLine(jsonString);
-
-// Display Category C39 – 39 Litre 12/24 volt marine fridge products with FridgeFreezerConfiguration = Front opening with ice box - standard option
-Console.WriteLine("Category C39 – 39 Litre 12/24 volt marine fridge products with FridgeFreezerConfiguration = Front opening with ice box - standard option");
-category1Products.Where(p => p.FridgeFreezerConfigurationId == 3).ToList().ForEach(p => Console.WriteLine(p.Name));
-
-public class Category
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public virtual ICollection<CategoryDoorTypeAndHinge> CategoryDoorTypeAndHinges { get; set; }
-    public virtual ICollection<Product> Products { get; set; }
-}
-
-public class CategoryDoorTypeAndHinge
-{
-    public int Id { get; set; }
-    public int CategoryId { get; set; }
-    public virtual Category Category { get; set; }
-    public int DoorTypeAndHingeId { get; set; }
-    public virtual DoorTypeAndHinge DoorTypeAndHinge { get; set; }
 }
 
 public class Product
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public int CategoryId { get; set; }
-    public virtual Category Category { get; set; }
+    public virtual ICollection<ProductDoorTypeAndHinge> ProductDoorTypeAndHinges { get; set; }
+    public virtual ICollection<Part> Parts { get; set; }
+}
+
+public class ProductDoorTypeAndHinge
+{
+    public int Id { get; set; }
+    public int ProductId { get; set; }
+    public virtual Product Product { get; set; }
+    public int DoorTypeAndHingeId { get; set; }
+    public virtual DoorTypeAndHinge DoorTypeAndHinge { get; set; }
+}
+
+public class Part
+{
+    public int Id { get; set; }
+    public string Number { get; set; }
+    public int ProductId { get; set; }
+    public virtual Product Product { get; set; }
     public decimal Price { get; set; }
 
     public int? FridgeFreezerConfigurationId { get; set; }
@@ -136,15 +113,15 @@ public class Product
     public int? CompressorVoltageId { get; set; }
     public virtual CompressorVoltage CompressorVoltage { get; set; }
 
-    public Product(int id, string name, int categoryId, decimal price,
+    public Part(int id, string number, int productId, decimal price,
         int? fridgeFreezerConfigurationId,
         int? doorTypeAndHingeId,
         int? compressorAndCondenserId,
         int? compressorVoltageId)
     {
         Id = id;
-        Name = name;
-        CategoryId = categoryId;
+        Number = number;
+        ProductId = productId;
         Price = price;
         FridgeFreezerConfigurationId = fridgeFreezerConfigurationId;
         DoorTypeAndHingeId = doorTypeAndHingeId;
@@ -157,26 +134,26 @@ public class CompressorVoltage
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public virtual ICollection<Product> Products { get; set; }
+    public virtual ICollection<Part> Parts { get; set; }
 }
 
 public class CompressorAndCondenser
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public virtual ICollection<Product> Products { get; set; }
+    public virtual ICollection<Part> Parts { get; set; }
 }
 
 public class DoorTypeAndHinge
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public virtual ICollection<Product> Products { get; set; }
+    public virtual ICollection<Part> Parts { get; set; }
 }
 
 public class FridgeFreezerConfiguration
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public virtual ICollection<Product> Products { get; set; }
+    public virtual ICollection<Part> Parts { get; set; }
 }
